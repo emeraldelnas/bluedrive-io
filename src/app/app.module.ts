@@ -13,6 +13,9 @@ import { GeneratedListComponent } from './random-integer-generator/generated-lis
 import { GeneratorComponent } from './random-integer-generator/generator/generator.component';
 import { StatsComponent } from './random-integer-generator/stats/stats.component';
 import { DialogService } from 'primeng/dynamicdialog';
+import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -24,6 +27,7 @@ import { DialogService } from 'primeng/dynamicdialog';
     GeneratorComponent,
     StatsComponent,
     TabViewModule,
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
   ],
   providers: [
     {
@@ -32,6 +36,7 @@ import { DialogService } from 'primeng/dynamicdialog';
       multi: true,
     },
     DialogService,
+    { provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }},
   ],
   bootstrap: [AppComponent],
 })

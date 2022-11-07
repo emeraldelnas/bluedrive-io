@@ -1,4 +1,3 @@
-import { RandomInteger } from '@models/random-integer';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,6 +7,7 @@ import { Observable } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { RandomInteger } from '@models/random-integer';
 @Component({
   selector: 'app-integer-modal',
   standalone: true,

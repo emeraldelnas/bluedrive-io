@@ -23,7 +23,7 @@
       "@environments/*": ["./src/environments/*"],
       "@api/*": ["./src/app/services/api/*"],
       "@interceptors/*": ["./src/app/services/interceptors/*"],
-      "@models/*": ["./src/app/shared/models/*"],
+      "@models/*": ["src/app/shared/models/*"],
       "@components/*": ["./src/app/components/*"]
     }
   },
