@@ -1,0 +1,19 @@
+<div class="mb-5">
+  <div *ngIf="config.data | async as data; else loading">
+    <span class="text-8xl font-bold line-height-1 text-primary">{{
+      data.value
+    }}</span>
+  </div>
+  <ng-template #loading>
+    <p-progressSpinner></p-progressSpinner>
+  </ng-template>
+</div>
+
+<button
+  pButton
+  pRipple
+  type="button"
+  label="Close"
+  class="p-button-secondary p-button-text"
+  (click)="close()"
+></button>

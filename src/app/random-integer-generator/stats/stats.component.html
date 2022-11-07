@@ -1,0 +1,8 @@
+<p-card header="Stats" styleClass="blue-shadow px-3">
+  <ng-container *ngIf="statsData$ | async as st">
+    <p-chart
+      type="line"
+      [data]="st"
+      [options]="basicOptions"
+    ></p-chart> </ng-container
+></p-card>

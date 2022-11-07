@@ -1,0 +1,47 @@
+.custom-tab-view {
+  .p-tabview-nav-container {
+    margin-bottom: 0.5rem;
+
+    .p-tabview-nav {
+      border: none;
+      gap: 0.5rem;
+
+      li {
+        .p-tabview-nav-link {
+          background-color: transparent;
+          padding: 0.55rem 1.35rem;
+          font-weight: 400;
+          border: none;
+          border-radius: 0.5rem;
+          margin: 0;
+
+          &:not(.p-disabled):focus {
+            box-shadow: none;
+          }
+        }
+
+        &.p-highlight {
+          .p-tabview-nav-link {
+            background-color: #fff;
+            font-weight: 500;
+          }
+        }
+
+        &:not(.p-highlight):not(.p-disabled):hover {
+          .p-tabview-nav-link {
+            background: #e6ecf3;
+          }
+        }
+      }
+    }
+  }
+
+  .p-tabview-nav,
+  .p-tabview-panels {
+    background: none;
+  }
+
+  .p-tabview-panels {
+    padding: 0;
+  }
+}

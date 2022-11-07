@@ -1,0 +1,41 @@
+<p-card
+  header="Generated Integers"
+  class="custom-table"
+  styleClass="blue-shadow px-3"
+>
+  <!-- <ng-container *ngIf="randomIntList$ | async as ril"> -->
+  <p-table
+    styleClass="p-datatable-sm"
+    [value]="integerList.results"
+    [lazy]="true"
+    (onLazyLoad)="loadNumbers($event)"
+    responsiveLayout="scroll"
+    dataKey="created"
+    [paginator]="true"
+    [totalRecords]="integerList.count"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="{totalRecords} Total Entries"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [rowTrackBy]="trackByFunction"
+    [loading]="isLoading"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-center">Number</th>
+        <th>Generator User</th>
+        <th>Created</th>
+        <th>Updated</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-randomInteger>
+      <tr>
+        <td class="font-bold text-center">{{ randomInteger.value }}</td>
+        <td>{{ randomInteger.generator_user }}</td>
+        <td>{{ randomInteger.created | date: "yyyy-MM-dd" }}</td>
+        <td>{{ randomInteger.updated | date: "yyyy-MM-dd" }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <!-- </ng-container> -->
+</p-card>

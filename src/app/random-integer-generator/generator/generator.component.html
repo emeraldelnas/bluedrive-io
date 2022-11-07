@@ -1,0 +1,21 @@
+<p-card
+  header="Random Integer Generator"
+  class="text-center"
+  styleClass="blue-shadow"
+>
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Generate"
+    [loading]="loading"
+    class="p-button-lg"
+    (click)="generateRandomInteger()"
+  ></button>
+
+  <ng-template pTemplate="footer">
+    <small class="text-600"
+      >Click the button above to generate a random integer from 0-100.</small
+    >
+  </ng-template>
+</p-card>
