@@ -1,13 +1,14 @@
-import { RandomInteger } from '@models/random-integer';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Observable } from 'rxjs';
+import { RandomInteger } from '@models/random-integer';
+
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-integer-modal',
   standalone: true,

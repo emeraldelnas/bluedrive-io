@@ -6,11 +6,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { ApiService } from '@api/api.service';
+
 import { RandomInteger } from '@models/random-integer';
-import { PrimeNGConfig } from 'primeng/api';
-import { DialogService } from 'primeng/dynamicdialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
 import { IntegerModalComponent } from './random-integer-generator/integer-modal/integer-modal.component';
+
+import { PrimeNGConfig } from 'primeng/api';
+import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
+
+import { Observable, Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -37,11 +40,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   generateRandomInteger(): void {
     this.randomInteger$ = this.apiService.getGeneratedRandomInteger();
-    this.openModal();
+    this._openModal();
   }
 
-  openModal(): void {
-    const ref = this.dialogService.open(IntegerModalComponent, {
+  private _openModal(): void {
+    this.isGenerateBtnLoading = true;
+
+    const modalConfig: DynamicDialogConfig = {
       data: this.randomInteger$,
       width: '25%',
       header: 'Generated Integer',
@@ -50,9 +55,8 @@ export class AppComponent implements OnInit, OnDestroy {
       styleClass: 'text-center integer-modal',
       closable: false,
       baseZIndex: 10000,
-    });
-
-    this.isGenerateBtnLoading = true;
+    };
+    const ref = this.dialogService.open(IntegerModalComponent, modalConfig);
 
     ref.onClose.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.isGenerateBtnLoading = false;

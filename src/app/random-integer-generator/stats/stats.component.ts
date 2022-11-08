@@ -2,11 +2,13 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ApiService } from '@api/api.service';
-import { CardModule } from 'primeng/card';
-import { ChartModule } from 'primeng/chart';
-import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { PaginatedRandomIntegerList } from '@models/paginated-random-integer-list';
 import { RandomInteger } from '@models/random-integer';
+
+import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
+
+import { CardModule } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
 
 import { map, Observable } from 'rxjs';
 

@@ -6,16 +6,18 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TableModule } from 'primeng/table';
 import { LazyLoadEvent } from 'primeng/api';
 import { ApiService } from '@api/api.service';
+
 import { GeneratorComponent } from '../generator/generator.component';
 import { RandomInteger } from '@models/random-integer';
 import { PaginatedRandomIntegerList } from '@models/paginated-random-integer-list';
+
+import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
-import { Subject, takeUntil } from 'rxjs';
 
+import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-generated-list',
   standalone: true,
@@ -45,6 +47,10 @@ export class GeneratedListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this._initIntegerList();
+  }
+
+  private _initIntegerList(): void {
     this.integerList = {
       count: 0,
       next: '',
