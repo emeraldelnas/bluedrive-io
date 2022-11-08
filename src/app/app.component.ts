@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ApiService } from '@api/api.service';
+import { GenerateService } from '@services/generate/generate.service';
 
 import { RandomInteger } from '@models/random-integer';
 import { IntegerModalComponent } from './random-integer-generator/integer-modal/integer-modal.component';
@@ -31,7 +32,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private apiService: ApiService,
     public dialogService: DialogService,
     private cdr: ChangeDetectorRef,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private generateService: GenerateService
   ) {}
 
   ngOnInit() {
@@ -39,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   generateRandomInteger(): void {
-    this.randomInteger$ = this.apiService.getGeneratedRandomInteger();
+    this.randomInteger$ = this.apiService.fetchGeneratedRandomInteger();
     this._openModal();
   }
 
@@ -60,6 +62,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ref.onClose.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.isGenerateBtnLoading = false;
+      this.generateService.getGeneratedListFirstPage();
+      this.generateService.refreshStats();
       this.cdr.detectChanges();
     });
   }

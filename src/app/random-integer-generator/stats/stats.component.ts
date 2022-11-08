@@ -1,16 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ApiService } from '@api/api.service';
-import { PaginatedRandomIntegerList } from '@models/paginated-random-integer-list';
-import { RandomInteger } from '@models/random-integer';
-
-import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
+import { GenerateService } from 'src/app/services/generate/generate.service';
 
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 
-import { map, Observable } from 'rxjs';
+import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
+
+import { Observable, switchMap } from 'rxjs';
 
 import * as dayjs from 'dayjs';
 const customParseFormat = require('dayjs/plugin/customParseFormat');
@@ -61,36 +59,13 @@ export class StatsComponent implements OnInit {
     },
   };
 
-  constructor(private apiService: ApiService) {}
+  constructor(private generateService: GenerateService) {}
 
   ngOnInit(): void {
-    this.statsData$ = this.apiService
-      .getRandomIntegerList({ offset: 0, limit: 20 })
-      .pipe(
-        map((res: PaginatedRandomIntegerList) => {
-          let labels = new Array();
-          let values = new Array();
-
-          res.results.map((item: RandomInteger) => {
-            const oldFormat = 'YYYY-MM-DDThh:mm:ssZZ';
-            const newFormat = 'D MMM h:mm A';
-
-            const label = dayjs(item.created, oldFormat).format(newFormat);
-
-            labels.push(label);
-            values.push(item.value);
-          });
-
-          return {
-            labels,
-            datasets: [
-              {
-                ...this.defaultDatasetSettings,
-                data: values,
-              },
-            ],
-          } as ChartData;
-        })
-      );
+    this.statsData$ = this.generateService.statsSubject.pipe(
+      switchMap((res) => {
+        return this.generateService.getStats();
+      })
+    );
   }
 }

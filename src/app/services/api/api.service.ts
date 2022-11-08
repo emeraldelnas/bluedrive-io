@@ -4,12 +4,8 @@ import { Observable } from 'rxjs';
 
 import { environment as env } from '@environments/environment';
 import { RandomInteger } from '@models/random-integer';
+import { ListParams } from '@models/list-params';
 import { PaginatedRandomIntegerList } from '@models/paginated-random-integer-list';
-
-interface ListParams {
-  limit: number;
-  offset: number;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +13,7 @@ interface ListParams {
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  public getRandomIntegerList(
+  public fetchRandomIntegerList(
     paramsObj: ListParams
   ): Observable<PaginatedRandomIntegerList> {
     const url = `${env.API_BASE_URL}/randominteger/`;
@@ -26,7 +22,7 @@ export class ApiService {
     });
   }
 
-  public getGeneratedRandomInteger(): Observable<RandomInteger> {
+  public fetchGeneratedRandomInteger(): Observable<RandomInteger> {
     const url = `${env.API_BASE_URL}/randominteger/generate/`;
     return this.http.get<RandomInteger>(url);
   }

@@ -22,6 +22,7 @@
     "paths": {
       "@environments/*": ["./src/environments/*"],
       "@api/*": ["./src/app/services/api/*"],
+      "@services/*": ["./src/app/services/*"],
       "@interceptors/*": ["./src/app/services/interceptors/*"],
       "@models/*": ["./src/app/shared/models/*"],
       "@components/*": ["./src/app/components/*"]

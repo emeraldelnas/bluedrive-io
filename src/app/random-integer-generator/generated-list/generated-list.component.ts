@@ -8,16 +8,18 @@ import {
 import { CommonModule } from '@angular/common';
 import { LazyLoadEvent } from 'primeng/api';
 import { ApiService } from '@api/api.service';
+import { GenerateService } from '@services/generate/generate.service';
 
 import { GeneratorComponent } from '../generator/generator.component';
 import { RandomInteger } from '@models/random-integer';
+import { ListParams } from '@models/list-params';
 import { PaginatedRandomIntegerList } from '@models/paginated-random-integer-list';
 
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 
-import { Subject, takeUntil } from 'rxjs';
+import { map, Observable, of, Subject, switchMap, tap } from 'rxjs';
 @Component({
   selector: 'app-generated-list',
   standalone: true,
@@ -34,8 +36,9 @@ import { Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GeneratedListComponent implements OnInit, OnDestroy {
-  integerList!: PaginatedRandomIntegerList;
+  integerList!: Observable<PaginatedRandomIntegerList>;
   isLoading = false;
+  first!: number;
 
   // Trigger to unsubscribe observables
   private destroy$: Subject<boolean> = new Subject<boolean>();
@@ -43,37 +46,33 @@ export class GeneratedListComponent implements OnInit, OnDestroy {
   constructor(
     private apiService: ApiService,
     public dialogService: DialogService,
-    private cdr: ChangeDetectorRef
-  ) {}
-
-  ngOnInit(): void {
-    this._initIntegerList();
+    private cdr: ChangeDetectorRef,
+    private generateService: GenerateService
+  ) {
+    this.integerList = generateService.pagerSubject.pipe(
+      switchMap((listParams: ListParams) => {
+        return apiService.fetchRandomIntegerList(listParams).pipe(
+          tap(() => {
+            this.isLoading = false;
+            this.first = listParams.offset;
+          }),
+          map((res) => {
+            return res;
+          })
+        );
+      })
+    );
   }
 
-  private _initIntegerList(): void {
-    this.integerList = {
-      count: 0,
-      next: '',
-      previous: '',
-      results: [],
-    };
-  }
+  ngOnInit(): void {}
 
   loadNumbers(event: LazyLoadEvent): void {
     this.isLoading = true;
-    const currentPage = event.first! / event.rows!;
-
-    this.apiService
-      .getRandomIntegerList({
-        limit: event.rows!,
-        offset: currentPage,
-      })
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res: PaginatedRandomIntegerList) => {
-        this.integerList = res;
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      });
+    this.generateService.setPagerCurrentLimit(event.rows!);
+    this.generateService.pagerSubject.next({
+      limit: event.rows!,
+      offset: event.first!,
+    });
   }
 
   trackByFunction = (index: number, item: RandomInteger) => {
