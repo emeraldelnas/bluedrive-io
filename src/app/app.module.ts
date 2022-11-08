@@ -7,14 +7,16 @@ import { HeadersInterceptor } from '@interceptors/headers/headers.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { RippleModule } from 'primeng/ripple';
-import { TabViewModule } from 'primeng/tabview';
 import { GeneratedListComponent } from './random-integer-generator/generated-list/generated-list.component';
 import { GeneratorComponent } from './random-integer-generator/generator/generator.component';
 import { StatsComponent } from './random-integer-generator/stats/stats.component';
+
+import { TabViewModule } from 'primeng/tabview';
 import { DialogService } from 'primeng/dynamicdialog';
+
+import { StickifyDirective } from './shared/directives/stickify/stickify.directive';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, StickifyDirective],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

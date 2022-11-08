@@ -1,4 +1,8 @@
-<p-card header="Stats" styleClass="blue-shadow px-3">
+<p-card
+  header="Stats"
+  subheader="Showing the latest 20 integers."
+  styleClass="blue-shadow px-3"
+>
   <ng-container *ngIf="statsData$ | async as st">
     <p-chart
       type="line"

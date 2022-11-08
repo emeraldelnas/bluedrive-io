@@ -9,10 +9,14 @@
       </p-tabView>
     </div>
     <div class="col-3">
-      <app-generator
-        [loading]="isGenerateBtnLoading"
-        (action)="generateRandomInteger()"
-      ></app-generator>
+      <div style="width: 304px">
+        <app-generator
+          class="stickify-container"
+          [loading]="isGenerateBtnLoading"
+          (action)="generateRandomInteger()"
+          appStickify
+        ></app-generator>
+      </div>
     </div>
   </div>
 </main>

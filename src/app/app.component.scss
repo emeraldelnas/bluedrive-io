@@ -5,4 +5,13 @@ main {
     display: block;
     margin-top: 2.6rem;
   }
+
+  .stickify-container {
+    width: inherit;
+
+    &.stickify {
+      position: fixed;
+      top: 1rem;
+    }
+  }
 }

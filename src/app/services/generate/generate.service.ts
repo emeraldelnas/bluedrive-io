@@ -73,6 +73,10 @@ export class GenerateService {
       );
   }
 
+  getPagerCurrentLimit(): number {
+    return this.pagerCurrentLimit;
+  }
+
   setPagerCurrentLimit(limit: number): void {
     this.pagerCurrentLimit = limit;
   }

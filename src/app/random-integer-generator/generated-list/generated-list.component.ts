@@ -39,6 +39,7 @@ export class GeneratedListComponent implements OnInit, OnDestroy {
   integerList!: Observable<PaginatedRandomIntegerList>;
   isLoading = false;
   first!: number;
+  rows!: number;
 
   // Trigger to unsubscribe observables
   private destroy$: Subject<boolean> = new Subject<boolean>();
@@ -49,6 +50,8 @@ export class GeneratedListComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private generateService: GenerateService
   ) {
+    this.rows = this.generateService.getPagerCurrentLimit();
+
     this.integerList = generateService.pagerSubject.pipe(
       switchMap((listParams: ListParams) => {
         return apiService.fetchRandomIntegerList(listParams).pipe(
